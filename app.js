@@ -8,6 +8,7 @@ function saveTask(evento) {
   const task = {
     title, //title: title,
     description, //description : description
+    id: new Date().valueOf().toString()
   };
 
   if (localStorage.getItem("tasks") === null) {
@@ -35,16 +36,15 @@ function getTasks() {
     tasksView.innerHTML += `<div class="card mb-3">
       <div class="card-body">
         <p>${task.title} - ${task.description}</p>
-        <a class="btn btn-danger" onclick="deleteTask('${task.title}')">Delete</a>
+        <a class="btn btn-danger" onclick="deleteTask('${task.id}')">Delete</a>
       </div>
     </div>`;
   });
 }
 
-function deleteTask(title) {
+function deleteTask(id) {
   let tasks = JSON.parse(localStorage.getItem("tasks")); 
-  tasks = tasks.filter( (task => task.title ==  title?  false : true ) )
-  console.log(tasks)
+  tasks = tasks.filter( (task => task.id == id?  false : true ) )
   localStorage.setItem('tasks', JSON.stringify(tasks))
   getTasks()
 }
